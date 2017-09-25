@@ -278,15 +278,31 @@ void Kruskal(p_GMartix GM){
 int* inDegree(p_GAList GA) {
     p_GAArc arc;
     int *inDs = (int*)malloc(GA->vertexNum * sizeof(int));
-    for(int i = 0; i < GA->vertexNum; i++) {
+    for (int i = 0; i < GA->vertexNum; ++i) {
         inDs[i] = 0;
+    }
+    for(int i = 0; i < GA->vertexNum; i++) {
         arc = GA->aList[i].firstArc;
         while(arc != NULL) {
-            inDs[i]++;
+            inDs[arc->aVertexNo]++;
             arc = arc->nextArc;
         }
     }
     return inDs;
+}
+
+int* outDegree(p_GAList GA) {
+    p_GAArc arc;
+    int *outDs = (int*)malloc(GA->vertexNum * sizeof(int));
+    for(int i = 0; i < GA->vertexNum; i++) {
+        outDs[i] = 0;
+        arc = GA->aList[i].firstArc;
+        while(arc != NULL) {
+            outDs[i]++;
+            arc = arc->nextArc;
+        }
+    }
+    return outDs;
 }
 
 int TopoSort(p_GAList GA){

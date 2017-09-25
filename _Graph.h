@@ -35,4 +35,10 @@ void DisPath(p_GMartix GM, int dist[], int path[], int S[], int V);
 
 void Prim(p_GMartix GM ,int V);
 
+int* inDegree(p_GAList GA);
+
+int* outDegree(p_GAList GA);
+
+int TopoSort(p_GAList GA);
+
 #endif //STRUCTUREPROJECT_GRAPH_H
