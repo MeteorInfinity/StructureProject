@@ -3,9 +3,10 @@
 //
 
 #include <stdlib.h>
-#include <printf.h>
+#include <stdio.h>
 #include "_Graph.h"
 #include "_Quene.h"
+#include "_Stack.h"
 #include "Tree/_Set.h"
 
 #define MAXV 100
@@ -70,7 +71,7 @@ p_GMartix GraphAList2Martix(p_GAList GAL){
     return GM;
 }
 
-void DFS(p_GAList GAL, int v){
+void DFS(p_GAList GAL, int v) {
     p_GAArc tmp;
     int visited[GAL->vertexNum+1];
     visited[v] = 1;
@@ -231,12 +232,6 @@ typedef struct EdgeStructure{
     int weight;
 }Edge, *p_Edge;
 
-void InsertSort(Edge a[], int n)
-{
-
-
-}
-
 void Kruskal(p_GMartix GM){
     int vest[MAXV];
     Edge edge[GM->edgeNum];
@@ -278,4 +273,45 @@ void Kruskal(p_GMartix GM){
             Set_Union(set, headT, rearT);
         }
     }
+}
+
+int* inDegree(p_GAList GA) {
+    p_GAArc arc;
+    int *inDs = (int*)malloc(GA->vertexNum * sizeof(int));
+    for(int i = 0; i < GA->vertexNum; i++) {
+        inDs[i] = 0;
+        arc = GA->aList[i].firstArc;
+        while(arc != NULL) {
+            inDs[i]++;
+            arc = arc->nextArc;
+        }
+    }
+    return inDs;
+}
+
+int TopoSort(p_GAList GA){
+    int* inDs = inDegree(GA);
+    p_Stack S = InitStack();
+
+    for (int i = 0; i < GA->vertexNum; ++i) {
+        if (!inDs[i]) {
+            Push(S, i);
+        }
+    } // 入度为0的顶点入栈
+
+    int count = 0;
+    int vertex;
+    while (!StackEmpty(S)){
+        vertex = Pop(S);
+        printf(vertex+" ");
+        count++;
+        p_GAArc arc = GA->aList[vertex].firstArc;
+        while (arc){
+            int k = arc->aVertexNo;
+            if(--inDs[k] == 0) Push(S, k); //当入度为0时入栈
+            arc = arc->nextArc;
+        } // 对i号顶点的每个邻接点的入度-1；
+    }
+    if(count < GA->vertexNum) return 0;
+    else return 1;
 }
