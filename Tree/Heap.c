@@ -10,7 +10,7 @@
 #include "_Heap.h"
 
 struct HeapStructure{
-    ElemType *Elements;
+    KeyType *Elements;
     int Size;
     int Capacity;
 };
@@ -37,14 +37,14 @@ void VisitHeap(p_Heap H){
 p_Heap CreateHeap(int MaxSize){
     p_Heap H = (p_Heap)malloc(sizeof(struct Heap_t));
     if(!H) return NULL;
-    H->Elements = (ElemType*)malloc((MaxSize+1) * sizeof(ElemType));
+    H->Elements = (KeyType*)malloc((MaxSize+1) * sizeof(KeyType));
     if(!H->Elements) return NULL;
     H->Capacity = MaxSize;
     H->Size = 0;
     return H;
 }
 
-int InsertHeap(p_Heap H, ElemType E){
+int InsertHeap(p_Heap H, KeyType E){
     if(IsHeapFull(H)) return 0;
     int i = ++H->Size;
     //while(H->Elements[i/2] < E && i > 1){     // MaxHeap
@@ -56,9 +56,9 @@ int InsertHeap(p_Heap H, ElemType E){
     return 1;
 }
 
-ElemType DeleteHeap(p_Heap H){
+KeyType DeleteHeap(p_Heap H){
     int parent, child;
-    ElemType item, temp;
+    KeyType item, temp;
     if(IsHeapEmpty(H)) return 0;
     item = H->Elements[1];
     temp = H->Elements[H->Size--];
@@ -77,7 +77,7 @@ ElemType DeleteHeap(p_Heap H){
 }
 
 void RegulateHeap(p_Heap H, int length, int child){
-    ElemType Tmp;
+    KeyType Tmp;
     int parent = child/2;
     if(parent<1) return;
     //if(H->Elements[parent] < H->Elements[child]) {    // MaxHeap
@@ -94,7 +94,7 @@ p_Heap CreateHeapByArr(int arr[], int length){
     if(!arr[length-1]) return NULL;
     p_Heap H = CreateHeap(length);
     for(int i = 0; i<length; i++){
-        H->Elements[i+1] = (ElemType)malloc(sizeof(int));
+        H->Elements[i+1] = (KeyType)malloc(sizeof(int));
         H->Elements[i+1] = arr[i];
         H->Size++;
     }

@@ -10,7 +10,7 @@ struct QueneStructure{
     int Front;
     int Rear;
     int Length;
-    ElemType *Elements;
+    KeyType *Elements;
 };
 
 static int Succ(p_Quene Q, int Value){
@@ -32,7 +32,7 @@ p_Quene CreatQuene(int MaxElements){
         printf("Create p_Quene Error: Memmory Fault\n");
         return NULL;
     }
-    Q->Elements = (ElemType*)malloc(MaxElements * sizeof(ElemType));
+    Q->Elements = (KeyType*)malloc(MaxElements * sizeof(KeyType));
     if(!Q->Elements){
         printf("Create p_Quene Elements Error: Memmory Fault\n");
         return NULL;
@@ -57,7 +57,7 @@ int MakeEmpty(p_Quene Q){
     return 1;
 }
 
-int EnQuene(p_Quene Q, ElemType E){
+int EnQuene(p_Quene Q, KeyType E){
     if(IsQueneFull(Q)){
         printf("EnQuene Error: p_Quene Full\n");
         return 0;
@@ -68,7 +68,7 @@ int EnQuene(p_Quene Q, ElemType E){
     return 1;
 }
 
-ElemType FrontQuene(p_Quene Q){
+KeyType FrontQuene(p_Quene Q){
     if(IsQueneEmpty(Q)){
         printf("FrontQuene Error: p_Quene Umpty\n");
         return NULL;
@@ -86,12 +86,12 @@ int DeQuene(p_Quene Q){
     return 1;
 }
 
-ElemType FrontAndDequene(p_Quene Q){
+KeyType FrontAndDequene(p_Quene Q){
     if(IsQueneEmpty(Q)){
         printf("DeQuene Error: p_Quene Umpty\n");
         return NULL;
     }
-    ElemType E = FrontQuene(Q);
+    KeyType E = FrontQuene(Q);
     DeQuene(Q);
     return E;
 }

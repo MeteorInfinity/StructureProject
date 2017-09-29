@@ -5,7 +5,7 @@
 #ifndef STRUCTUREPROJECT_QUENE_H
 #define STRUCTUREPROJECT_QUENE_H
 
-typedef int ElemType;
+typedef int KeyType;
 
 typedef struct QueneStructure *p_Quene;
 
@@ -19,12 +19,12 @@ int DisposeQuene(p_Quene Q);
 
 int MakeEmpty(p_Quene Q);
 
-int EnQuene(p_Quene Q, ElemType E);
+int EnQuene(p_Quene Q, KeyType E);
 
-ElemType FrontQuene(p_Quene Q);
+KeyType FrontQuene(p_Quene Q);
 
 int DeQuene(p_Quene Q);
 
-ElemType FrontAndDequene(p_Quene Q);
+KeyType FrontAndDequene(p_Quene Q);
 
 #endif //STRUCTUREPROJECT_QUENE_H

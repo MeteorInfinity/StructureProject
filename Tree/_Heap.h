@@ -10,7 +10,7 @@
 
 typedef struct HeapStructure *p_Heap;
 
-typedef int ElemType;
+typedef int KeyType;
 
 int IsHeapFull(p_Heap H);
 
@@ -20,9 +20,9 @@ void VisitHeap(p_Heap H);
 
 p_Heap CreateHeap(int MaxSize);
 
-int InsertHeap(p_Heap H, ElemType E);
+int InsertHeap(p_Heap H, KeyType E);
 
-ElemType DeleteHeap(p_Heap H);
+KeyType DeleteHeap(p_Heap H);
 
 void RegulateHeap(p_Heap H, int length, int child);
 

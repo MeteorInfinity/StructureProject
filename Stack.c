@@ -9,14 +9,14 @@
 #define STACK_INCREASE 10
 
 struct StackStructure{
-    ElemType *base;
-    ElemType *top;
+    KeyType *base;
+    KeyType *top;
     int stackSize;
 };
 
 p_Stack InitStack(){
     p_Stack S = (p_Stack)malloc(sizeof(struct StackStructure));
-    S->base = (ElemType*)malloc(STACK_INIT_SIZE * sizeof(ElemType));
+    S->base = (KeyType*)malloc(STACK_INIT_SIZE * sizeof(KeyType));
     if(!S->base) return NULL;
     S->top = S->base;
     S->stackSize = STACK_INIT_SIZE;
@@ -29,7 +29,7 @@ int StackEmpty(p_Stack S){
     return 0;
 }
 
-ElemType* GetTop(p_Stack S){
+KeyType* GetTop(p_Stack S){
     if (!StackEmpty(S)) {
         return S->top - 1;
     } else {
@@ -37,9 +37,9 @@ ElemType* GetTop(p_Stack S){
     }
 }
 
-int Push(p_Stack S, ElemType e){
+int Push(p_Stack S, KeyType e){
     if(S->top - S->base >= S->stackSize){
-    S->base = (ElemType*)realloc(S->base, STACK_INCREASE * sizeof(ElemType));
+    S->base = (KeyType*)realloc(S->base, STACK_INCREASE * sizeof(KeyType));
     if(!S->base) return 0;
     S->top = S->base + S->stackSize;
     S->stackSize += STACK_INCREASE;
@@ -48,7 +48,7 @@ int Push(p_Stack S, ElemType e){
     return 1;
 }
 
-ElemType Pop(p_Stack S){
+KeyType Pop(p_Stack S){
     if (!StackEmpty(S)) {
         return *--S->top;
     } else {
@@ -58,7 +58,7 @@ ElemType Pop(p_Stack S){
 
 void VisitStack(p_Stack S){
     if(StackEmpty(S)) printf("Stack umpty");
-    for(ElemType* p = S->top-1; p >= S->base; p--){
+    for(KeyType* p = S->top-1; p >= S->base; p--){
         printf("%d ",*p);
     }
     printf("\n");

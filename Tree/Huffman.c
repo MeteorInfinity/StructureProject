@@ -10,7 +10,7 @@ struct HuffmanTreeNode;
 typedef struct HuffmanTreeNode *p_HTNode;
 
 struct HeapStructure{
-    ElemType *Elements;
+    KeyType *Elements;
     int Size;
     int Capacity;
 };
