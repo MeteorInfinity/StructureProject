@@ -80,7 +80,7 @@ void BTNodeInsert(p_BTNode q, int i, KeyType K, p_BTNode ap){
 
 int BTreeInsert(p_BTNode T, KeyType K){
     Result R = BTreeSerach(T, K);
-    if(R.flag) return 1;
+    if(R.flag) return 0;
     p_BTNode q = R.pt, ap = NULL;
     int i = R.no, tmp = K, flag = 0;
     while(q && !flag){
@@ -115,6 +115,6 @@ int BTreeInsert(p_BTNode T, KeyType K){
         N->key[1] = tmp;
         N->ptr[0] = T;
         N->ptr[1] = ap;
-
     }
+    return 1;
 }
