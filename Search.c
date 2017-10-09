@@ -118,3 +118,55 @@ int BTreeInsert(p_BTNode T, KeyType K){
     }
     return 1;
 }
+
+#define MAXSIZE 100
+#define NULLKEY -1
+#define DELKEY -2
+
+typedef struct {
+    KeyType key;
+    char* data;
+}HashTable[MAXSIZE];
+
+int HT_Seratch (HashTable HT, int P, KeyType K){
+    int i = 0;
+    int adr = K % P;
+    while (HT[adr].key != NULLKEY && HT[adr].key != K){
+        i++;
+        adr = (adr + 1) % P;
+    }
+    if (HT[adr].key == K) {
+        return adr;
+    } else {
+        return -1;
+    }
+}
+
+int HT_Delete (HashTable HT, int P, int K) {
+    int adr = HT_Seratch(HT, P, K);
+    if (adr != -1) {
+        HT[adr].key = DELKEY;
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+void HT_Insert (HashTable HT, int P, KeyType K){
+    int adr = K % P;
+    int i = 1;
+    while (HT[adr].key != NULLKEY && HT[adr].key != DELKEY) {
+        adr = (adr + 1) % P;
+        i++;
+    }
+    HT[adr].key = K;
+}
+
+HashTable HT_Create (HashTable HT, KeyType Ks[], int n, int m, int p){
+    for (int i = 0; i < m; ++i) {
+        HT[i].key = NULLKEY;
+    }
+    for (int j = 0; j < n; ++j) {
+        HT_Insert(HT, Ks[j], p);
+    }
+}
