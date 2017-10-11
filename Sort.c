@@ -100,9 +100,72 @@ void Select_Sort(int A[], int n){
     }
 }
 
-void Heap_Sort0(int A[], int n){
+void Heap_Sort_Low(int A[], int n){
     p_Heap heap = CreateHeapByArr(A, n);
     for (int i = 0; i < n; ++i) {
         A[i] = DeleteHeap(heap);
     }
 }
+
+// 筛选法建立最大堆
+void Heap_Sift(int A[], int low, int high){
+    int i = low, j = 2 * i; // A[j]是A[i]的左孩子
+    int tmp = A[i];
+    while (j <= high){
+        if(j < high && A[j] < A[j+1]) // 若右孩子较大，将j指向右孩子
+            j++;
+        if(tmp < A[j]){
+            A[i] = A[j]; // 将A[j]调整到双亲节点
+            i = j; // 继续向下筛选
+            j = i * 2;
+        }else{
+            break;
+        }
+    }
+    A[i] = tmp;
+}
+
+void Heap_Sort(int A[], int n){
+    int i, tmp;
+    for(i = n/2; i >= 1; i--){
+        Heap_Sift(A, i , n);
+    }
+    for(i = n; i > 1; i--){
+        tmp = A[1];
+        A[1] = A[i];
+        A[i] = tmp;
+        Heap_Sift(A, 1, i-1);
+    }
+}
+
+// 筛选法建立最大堆(从零开始)
+void Heap_Sift_0(int A[], int low, int high){
+    int i = low, j = 2 * (i + 1) - 1; // A[j]是A[i]的左孩子
+    int tmp = A[i];
+    while (j <= high){
+        if(j < high && A[j] < A[j+1]) // 若右孩子较大，将j指向右孩子
+            j++;
+        if(tmp < A[j]){
+            A[i] = A[j]; // 将A[j]调整到双亲节点
+            i = j; // 继续向下筛选
+            j = 2 * (i + 1) - 1;
+        }else{
+            break;
+        }
+    }
+    A[i] = tmp;
+}
+
+void Heap_Sort_0(int A[], int n){
+    int i, tmp;
+    for(i = n/2; i >= 0; i--){
+        Heap_Sift_0(A, i , n);
+    }
+    for(i = n-1; i > 0; i--){
+        tmp = A[1];
+        A[1] = A[i];
+        A[i] = tmp;
+        Heap_Sift_0(A, 1, i);
+    }
+}
+
