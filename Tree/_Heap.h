@@ -28,5 +28,6 @@ void RegulateHeap(p_Heap H, int length, int child);
 
 p_Heap CreateHeapByArr(int arr[], int length);
 
+p_Heap CreateHeapByArr2(int arr[], int i, int j);
 
 #endif //_HEAP_H

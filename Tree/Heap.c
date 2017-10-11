@@ -104,3 +104,18 @@ p_Heap CreateHeapByArr(int arr[], int length){
     H->Size = length;
     return H;
 }
+
+p_Heap CreateHeapByArr2(int arr[], int i, int j){
+    int n = j-i+1;
+    p_Heap H = CreateHeap(n);
+    for(int p=i; p<=j; p++){
+        H->Elements[p+1] = (KeyType)malloc(sizeof(int));
+        H->Elements[p+1] = arr[p];
+        H->Size++;
+    }
+    for(int child = n; child > 0; child--){
+        RegulateHeap(H, n, child);
+    }
+    H->Size = n;
+    return H;
+}

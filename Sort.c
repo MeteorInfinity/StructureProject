@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Tree/_Heap.h"
 
 void Bubble_Sort(int A[], int n){
     int flag,tmp;
@@ -64,5 +65,44 @@ void Shell_Sort(int A[], int n){
             A[i] = tmp; // 插入落位
         }
     }
+}
 
+void Quick_sort(int A[], int low, int high) {
+    int i = low;
+    int j = high;
+    if(i < j){
+        int tmp = A[i];
+        while(i != j){
+            while(i<j && A[j]>=tmp) // 从右到左找到第一个小于tmp的值
+                j--;
+            A[i] = A[j];
+            while(i<j && A[i]<=tmp) // 从左到右找到第一个大于tmp的值
+                i++;
+            A[j] = A[i];
+        }
+        A[i] = tmp;
+        Quick_sort(A, low, i-1);
+        Quick_sort(A, i+1, high);
+    }
+}
+
+void Select_Sort(int A[], int n){
+    int min, tmp;
+    for (int i = 0; i < n; ++i) {
+        min = A[0];
+        for (int j = 1; j < n; ++j) {
+            if(A[j] > min)
+                min = A[j];
+        }
+        tmp = A[i];
+        A[i] = A[min];
+        A[min] = tmp;
+    }
+}
+
+void Heap_Sort0(int A[], int n){
+    p_Heap heap = CreateHeapByArr(A, n);
+    for (int i = 0; i < n; ++i) {
+        A[i] = DeleteHeap(heap);
+    }
 }
