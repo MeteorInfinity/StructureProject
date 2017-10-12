@@ -169,3 +169,85 @@ void Heap_Sort_0(int A[], int n){
     }
 }
 
+void Merge(int A[], int C[], int L, int R, int RE){
+    int LE = R - 1;
+    int num = RE - L + 1;
+    int tmp = L;
+    while(L <= LE && R <= RE){
+        if(A[L] <= A[R])
+            C[tmp++] = A[L++];
+        else
+            C[tmp++] = A[R++];
+        //C[tmp++] = A[L] <= A[R]? A[L++]: A[R++];
+    }
+    while(L <= LE)
+        C[tmp++] = A[L++];
+    while(R <= RE)
+        C[tmp++] = A[R++];
+    for (int i = 0; i < num; ++i, RE--) {
+        A[RE] = C[RE];
+    }
+}
+
+void MSort(int A[], int C[], int L, int RE){
+    int center;
+    if(L < RE){
+        center = (L + RE) / 2;
+        MSort(A, C, L, center);
+        MSort(A, C, center+1, RE);
+        Merge(A, C, L, center+1, RE);
+    }
+}
+
+void Merge_Sort(int A[], int n){
+    int *C = (int*)malloc(n * sizeof(int));
+    if(C == NULL) return;
+    MSort(A, C , 0, n-1);
+    free(C);
+}
+
+void Merge_UR(int A[], int C[], int L, int R, int RE){
+    int LE = R - 1;
+    int num = RE - L + 1;
+    int tmp = L;
+    while(L <= LE && R <= RE){
+        if(A[L] <= A[R])
+            C[tmp++] = A[L++];
+        else
+            C[tmp++] = A[R++];
+        //C[tmp++] = A[L] <= A[R]? A[L++]: A[R++];
+    }
+    while(L <= LE)
+        C[tmp++] = A[L++];
+    while(R <= RE)
+        C[tmp++] = A[R++];
+}
+
+void Merge_Pass(int A[], int C[], int n, int length){
+    int i;
+    for(i = 0; i <= n-2*length; i += 2*length)
+        Merge_UR(A, C, i, i+length, i+2*length-1);
+    if(i+length < n)
+        Merge_UR(A, C, i, i+length, n-1);
+    else
+        for(int j = i; j < n; j++)
+            C[j] = A[j];
+}
+
+void Merge_Sort_RC(int A[], int n){
+    int length = 1;
+    int *C = (int*)malloc(n * sizeof(int));
+    if(C == NULL) return;
+    while(length < n){
+        Merge_Pass(A, C, n, length);
+        length *= 2;
+        Merge_Pass(C, A, n, length);
+        length *= 2;
+    }
+    free(C);
+}
+
+
+
+
+
