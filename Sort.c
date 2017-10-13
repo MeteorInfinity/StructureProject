@@ -247,7 +247,70 @@ void Merge_Sort_RC(int A[], int n){
     free(C);
 }
 
+#define M 101
+typedef struct StuLink *p_SLink;
+struct StuLink {
+    int grade;
+    char* msg;
+    p_SLink next;
+};
 
+void Bucket_Sort(p_SLink A[], int n){
+    p_SLink count[M];
+    p_SLink tmp;
+    for (int i = 0; i < n; ++i) {
+        tmp = count[A[i]->grade];
+        A[i]->next = tmp;
+        count[A[i]->grade] = A[i];
+    }
+    int num = 0;
+    for (int j = 0; j < M; ++j) {
+        tmp = count[j];
+        while(tmp){
+            A[num] = tmp;
+            tmp = tmp->next;
+            num++;
+        }
+    }
+}
 
+#define N 1000
+#define B 10
 
-
+void Radix_Sort(p_SLink A[], int n){
+    int k = N, l = 0;
+    while (k != 0){
+        l++;
+        k = k / B;
+    }
+    p_SLink count[l][B], tmp;
+    int i = 1;
+    for (int j = 0; j < B; ++j) {
+        k = A[j]->grade % B;
+        tmp = count[i][k];
+        A[j]->next = tmp;
+        count[i][k] = A[j];
+    }
+    for (i = 2; i <= l; ++i) {
+        for (int j = 0; j < B; ++j) {
+            tmp = count[i-1][j];
+            while(tmp){
+                k = tmp->grade % B ^ i;
+                if(count[i][k] != NULL)
+                    count[i][k]->next = tmp;
+                else
+                    count[i][k] = tmp;
+                tmp = tmp->next;
+            }
+        }
+    }
+    int num = 0;
+    for (int j = 0; j <= l; ++j) {
+        tmp = count[l][j];
+        while(tmp){
+            A[num] = tmp;
+            tmp = tmp->next;
+            num++;
+        }
+    }
+}
